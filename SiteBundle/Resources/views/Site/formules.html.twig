@@ -1,0 +1,24 @@
+{% extends "::base.html.twig" %} 
+
+{# assets #}
+{% block javascript %}
+  {{ parent() }}
+  <script src="{{ asset('bundles/magiseosite/bootstrap-3.0.0/js/button.js') }}"></script>
+{% endblock %}
+
+{# body #}
+{% block body %} 
+<div class="body-content">
+  {% include "MagiseoSiteBundle:Commons:header.html.twig" %}
+  <div class="left-side">
+    <div class="logo"></div>
+    <div class="intro">
+      <div class="intro-left">
+          
+      </div>
+    </div>
+  </div>
+  {% include "MagiseoSiteBundle:Commons:menuRight.html.twig" %}
+  {% include "MagiseoSiteBundle:Commons:footer.html.twig" %}
+</div>
+{% endblock %}

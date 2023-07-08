@@ -1,0 +1,103 @@
+{% block header %}
+  {% block stylesheets %}
+    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/start/jquery-ui.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  {% endblock %}
+
+  {% block javascript %}
+    {% javascripts
+    "@MagiseoUserBundle/Resources/public/js/login.js" %}
+      <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
+  {% endblock %}
+<div class="separator" id="accueil"></div>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <!-- Logo Accueil -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ path('magiseo_site_homepage') }}"
+               style="padding:9px;">
+                <img src="{{ asset('bundles/magiseosite/images/icons/home.png') }}" alt="Accueil">
+            </a>
+        </div>
+        <!-- Reste de la navbar -->
+        <div class="navbar-collapse collapse in" id="navbar-collapse-1">
+            {% set currentUrl = app.request.attributes.get('_route') %}
+            <!-- Menu links -->
+            <ul class="nav navbar-nav">
+                <li {% if currentUrl == 'magiseo_site_homepage' %}class="active"{% endif %}>
+                    <a href="{{ path('magiseo_site_homepage') }}">
+                        Accueil
+                    </a>
+                </li>
+                {% if is_granted("ROLE_USER") %}
+                <li {% if currentUrl == 'magiseo_user_profil' %}class="active"{% endif %}>
+                    <a href="{{ path('magiseo_user_profil') }}">
+                        Mon compte
+                    </a>
+                </li>
+                <li {% if currentUrl == 'magiseo_site_alertes' %}class="active"{% endif %}>
+                    <a href="{{ path('magiseo_site_alertes') }}">
+                        Notifications
+                    </a>
+                </li>
+                {% endif %}
+          <!--       <li {% if currentUrl == 'magiseo_site_formules' %}class="active"{% endif %}><a href="{{ path('magiseo_site_formules') }}">Offres</a></li> -->
+                <!--       <li><a href="#">Nous connaître</a></li> -->
+                <li {% if currentUrl == 'magiseo_site_team' %}class="active"{% endif %}>
+                    <a href="{{ path('magiseo_site_team') }}">
+                        L'&eacute;quipe
+                    </a>
+                </li>
+                <li {% if currentUrl == 'magiseo_site_contact' %}class="active"{% endif %}>
+                    <a href="{{ path('magiseo_site_contact') }}">
+                        Nous contacter
+                    </a>
+                </li>
+                <li {% if currentUrl == 'magiseo_site_diagnostic' %}class="active"{% endif %}>
+                    <a class="main_feature" href="{{ path('magiseo_site_diagnostic') }}">
+                        Outil de diagnostic
+                    </a>
+                </li>
+            </ul>
+            <!-- icone "clé" -->
+            <div class="navbar-brand float-right" style="padding:9px;">
+                <img src="{{ asset('bundles/magiseosite/images/icons/key.png') }}" 
+                     alt="Connexion">
+            </div>
+            <!-- textes authentification -->
+            <div class="navbar-brand float-right" style="text-align:right;padding: 15px 0px 0px 0px;">
+            {% if is_granted("ROLE_USER") %}
+                <span id="userName"  class="create_account">
+                    {{ app.user.username|capitalize }}
+                </span>
+                <a href="{{ path('fos_user_security_logout') }}"  class="create_account">
+                    Logout
+                </a>
+            {% else %} 
+                <a href="{{ path('fos_user_registration_register') }}" class="create_account">Créer un compte</a>
+                <a id="login">
+                    <button class="btn btn-primary btn-xs create_account">
+                        Se connecter
+                    </button>
+                </a>
+            {% endif %}
+            </div>
+
+        </div>
+    </div>
+</nav>
+<div id="loginDialog" title="Connexion">
+    <div id="ajax_loaderImg">
+        <img alt="loader-gif"
+             src="{{ asset('bundles/magiseouser/images/ajax-loader.gif') }}" />
+    </div>
+</div>
+{% endblock %}

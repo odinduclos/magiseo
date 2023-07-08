@@ -1,0 +1,45 @@
+{% extends "::base.html.twig" %} 
+
+{% block body %}
+<div class="body-content">
+  {% include "MagiseoSiteBundle:Commons:header.html.twig" %}
+  <div class="left-side">
+    <div class="logo"></div>
+    <iframe src="http://prezi.com/embed/rb7oavk44h16/?bgcolor=ffffff&amp;lock_to_path=1&amp;autoplay=1&amp;autohide_ctrls=0&amp;features=undefined&amp;disabled_features=undefined" width="800" height="600" frameBorder="0" webkitAllowFullScreen mozAllowFullscreen allowfullscreen></iframe>
+    <h1>
+      MAGISEO, l'outil de référencement en 4 étapes!
+    </h1>
+    <div class="separator"></div>
+    <h2>
+      Etape 1: Le diagnostic.
+    </h2>
+    Fournissez à MagiSEO, l'URL de votre site, dans l'onglet diagnostic du site. Et il vous donnera un coefficient d'optimisations immédiatement applicables par MagiSEO. Vous disposerez donc du score global d'optimisation de votre site, mais aussi des scores de chaque catégorie de recommandations MagiSEO.
+    <div class="notes">Limité à un diagnostic sur dix pages maximum pour les comptes découverte.</div>
+    <h2>
+      Etape 2: Les recommandations.
+    </h2>
+    MagiSEO va traiter une ou plusieurs pages de votre site et vous rendre le résultat sous forme de rapport et d'un fichier de résultat. Le fichier de résultat contient les résultats de l'optimisation MagiSEO sur vos pages. Le rapport détaille le traitement pas à pas.
+    Il y 6 catégories de recommandations MagiSEO:
+    <ul>
+      <li>HTML (normalisation du code)</li>
+      <li>CSS</li>
+      <li>Contenu des pages</li>
+      <li>Bases de données</li>
+      <li>Mots clés (pertinence et fréquence)</li>
+      <li>Cross-linking (service additionnel MagiSEO)</li>
+    </ul>
+    <div class="notes">Limité à une page pour les comptes découverte.</div>
+    <h2>
+      Etape 3: Le traitement.
+    </h2>
+    Lors du traitement, tout votre site sera scanné puis optimisé par MagiSEO, selon la formule une optimisation pourra également être appliquée à votre base de données, il vous suffira pour ça de donner accès à la base de données à MagiSEO par upload à partir du site ou par accès direct en FTP.
+    <div class="notes">La puissance de traitement dépends de votre formule MagiSEO.</div>
+    <h2>
+      Etape 4: Le rapport.
+    </h2>
+    Un rapport de traitement complet vous sera envoyé par mail. De même un rapport pdf MagiSEO sera disponible directement depuis l'interface de votre compte.
+  </div>
+  {% include "MagiseoSiteBundle:Commons:menuRight.html.twig" %}
+  {% include "MagiseoSiteBundle:Commons:footer.html.twig" %}
+</div>
+{% endblock %}

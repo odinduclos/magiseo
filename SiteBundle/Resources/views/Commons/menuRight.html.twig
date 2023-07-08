@@ -1,0 +1,20 @@
+{#{% block menuRight %}
+{% set currentUrl = app.request.attributes.get('_route') %}
+<div class="right-side">
+  <div class="bs-example">
+    <ul class="nav nav-pills nav-stacked">
+      <li {% if currentUrl == 'magiseo_site_homepage' %}class="active"{% endif %}><a href="{{ path('magiseo_site_homepage') }}">Accueil</a></li>
+      {% if is_granted("ROLE_USER") %}
+         <li {% if currentUrl == 'magiseo_site_profil' %}class="active"{% endif %}><a href="{{ path('magiseo_site_profil') }}">Mon compte</a></li>
+      {% endif %}
+      <li {% if currentUrl == 'magiseo_site_alertes' %}class="active"{% endif %}><a href="{{ path('magiseo_site_alertes') }}">Alertes</a></li>
+<!--       <li {% if currentUrl == 'magiseo_site_formules' %}class="active"{% endif %}><a href="{{ path('magiseo_site_formules') }}">Offres</a></li> -->
+<!--       <li><a href="#">Nous connaître</a></li> -->
+      <li {% if currentUrl == 'magiseo_site_team' %}class="active"{% endif %}><a href="{{ path('magiseo_site_team') }}">L'&eacute;quipe</a></li>
+      <li {% if currentUrl == 'magiseo_site_contact' %}class="active"{% endif %}><a href="{{ path('magiseo_site_contact') }}">Nous contacter</a></li>
+      <li {% if currentUrl == 'magiseo_site_diagnostic' %}class="active"{% endif %}><a href="{{ path('magiseo_site_diagnostic') }}">Outil de diagnostic</a></li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
+#}

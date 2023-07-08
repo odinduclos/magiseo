@@ -1,0 +1,144 @@
+{% extends "::base.html.twig" %}
+
+{% block javascript %}
+    {{ parent() }}
+{% javascripts
+    "@MagiseoUserBundle/Resources/public/js/profil.js"
+    "@MagiseoUserBundle/Resources/public/js/profil_popup.js" %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{#<script src="{{ asset('Magiseo\UserBundle\js\profil.js') }}"></script>#}
+{#<script src="{{ asset('Magiseo/UserBundle/Resources/public/js/profil.js') }}"></script>#}
+{% endblock %}
+
+{# body #}
+{% block body %}
+<div class="body-content">
+  {% include "MagiseoSiteBundle:Commons:header.html.twig" %}
+    <div class="left-side">
+        <div class="logo"></div>
+        <div class="intro">
+            <div class="intro-left">
+                <legend>Mes sites</legend>
+{#        <div class="alertes">L'outil de diagnostic est encore en développement et donc actuellement indisponible. Pour plus d'informations, suivez nous sur Twitter ou Facebook!</div>#}
+            </div>
+            <div class="intro-left">
+                <legend>Mon compte</legend>
+                Offre découverte
+                <div class="notes">
+                    L'offre découverte comprends:
+                    <ul>
+                        <li>Un diagnostic par heure de dix pages maximum.</li>
+                        <li>Une recommandation MagiSEO par heure de une page maximum.</li>
+                        <li>Un rapport MagiSEO par heure.</li>
+                    </ul>
+                    N'hésitez pas à souscrire à nos offres MagiSEO afin d'augmenter votre puissance d'optimisation!
+                </div>
+            </div>
+            <div class="intro-left">
+                <legend>Mes rapports</legend>
+                {% if reports is defined %}
+                    WOohoo !
+                {% else %}
+                    Pas de rapports.
+                {% endif %}
+                <div class="notes">Les rapports vous seront fournis après chaque traitement MagiSEO sur votre ou vos sites.</div>
+            </div>
+
+            <div class="intro-left">
+                <legend>Editer mon profil</legend>
+                <div class="control-group">
+                    <label id="firstname" class="control-label">Nom de la société</label>
+                    <div class="controls">
+                        <button data-type="company" class="edit" 
+                                data-title-save="Enregistrer"
+                                data-title-edit="Editer cette information"
+                                title="Editer cette information">
+                            <span class="fa fa-edit"></span></button>
+                        <button data-type="company" class="cancel hide" 
+                                title="Annuler">
+                            <span class="fa fa-times"></span></button>
+                        <span class="profil_info {% if app.user.company is empty %} info_missing {%endif%}" 
+                              id="company">{{ app.user.company is empty ? 'Non défini' : app.user.company }}</span>
+                        <input id="company" class="large hide" type="text"
+                               placeholder="Echap pour quitter le mode édition"
+{#                               value="{{ app.user.company }}"#}
+                               >
+                        <div id="company_errorMsg" class="alert alert-danger">
+                            Erreur : <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label id="email" class="control-label">E-mail</label>
+                    <div class="controls">
+                        <button data-type="email" class="edit" 
+                                data-title-save="Enregistrer"
+                                data-title-edit="Editer cette information"
+                                title="Editer cette information">
+                            <span class="fa fa-edit"></span></button>
+                        <button data-type="email" class="cancel hide" 
+                                title="Annuler">
+                            <span class="fa fa-times"></span></button>
+                        <span class="profil_info {% if app.user.email is empty %} info_missing {%endif%}" 
+                              id="email">{{ app.user.email is empty ? 'Non défini' : app.user.email }}</span>
+                        <input id="email" class="large hide" type="text" 
+                               placeholder="Echap pour quitter le mode édition"
+{#                               value="{{ app.user.email }}"#}
+                               >
+                        <div id="email_errorMsg" class="alert alert-danger">
+                            Erreur : <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label id="password" class="control-label">Mot de passe</label>
+                    <div class="controls">
+                        <button data-type="password" class="edit" 
+                                data-title-save="Enregistrer"
+                                data-title-edit="Editer cette information"
+                                title="Editer cette information">
+                            <span class="fa fa-edit"></span></button>
+                        <button data-type="password" class="cancel hide" 
+                                title="Annuler">
+                            <span class="fa fa-times"></span></button>
+                        <span class="profil_info" id="password">
+                            ********
+                        </span>
+                        <form id="newPasswordForm" class="hide form-horizontal editer_profil">
+                            <fieldset>
+                                <div class="control-group small">
+                                    <div class="controls">
+                                        <input id="password1" class="small" type="password" placeholder="Nouveau mot de passe">
+                                    </div>
+                                </div>
+                                <div class="control-group small">
+                                    <label id="password" class="control-label">Vérification</label>
+                                    <div class="controls">
+                                        <input id="password2" class="small" type="password" placeholder="Répetez votre mot de passe...">
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+{#            <div class="intro-left">
+                <button id="modif_infos_compte" class="btn btn-primary">
+                    Editer mon profil
+                </button>
+            </div>#}
+
+        </div>
+    </div>
+  {% include "MagiseoSiteBundle:Commons:menuRight.html.twig" %}
+  {% include "MagiseoSiteBundle:Commons:footer.html.twig" %}
+</div>
+<div id="modify_infos" title="Editer mon profil">
+    <div id="ajax_loaderImg_infosCompte">
+        <img alt="loader-gif"
+             src="{{ asset('bundles/magiseouser/images/ajax-loader.gif') }}" />
+    </div>
+</div>
+{% endblock %}

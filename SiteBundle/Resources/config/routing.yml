@@ -1,0 +1,39 @@
+# src/Magiseo/SiteBundle/Resources/config/routing.yml
+
+magiseo_site_homepage:
+    pattern: /
+    defaults: { _controller: MagiseoSiteBundle:Site:index }
+
+magiseo_site_team:
+    pattern: /team
+    defaults: { _controller: MagiseoSiteBundle:Site:team }
+
+magiseo_site_contact:
+    pattern: /contact
+    defaults: { _controller: MagiseoSiteBundle:Site:contact }
+
+magiseo_site_formules:
+    pattern: /formules
+    defaults: { _controller: MagiseoSiteBundle:Site:formules }
+
+magiseo_site_diagnostic:
+    pattern: /diagnostic
+    defaults: { _controller: MagiseoSiteBundle:Site:diagnostic }
+
+magiseo_site_diagnosticResult:
+    pattern: /diagnosticResult
+    defaults: { _controller: MagiseoSiteBundle:Site:diagnosticResult }
+
+magiseo_site_alertes:
+    pattern: /notifications
+    defaults: { _controller: MagiseoSiteBundle:Site:alertes }
+
+magiseo_site_rapport:
+    pattern: /rapport/{id}
+    defaults: { _controller: MagiseoSiteBundle:Site:rapport, id: 0 }
+    
+magiseo_site_getpdfrapport:
+    pattern: /pdfrapport
+    defaults: { _controller: MagiseoSiteBundle:Site:getRapportAsPdf}
+    requirements:
+        _methods: POST

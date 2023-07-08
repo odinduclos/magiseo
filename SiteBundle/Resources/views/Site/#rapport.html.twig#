@@ -1,0 +1,58 @@
+{% extends "::base.html.twig" %} 
+
+{# body #}
+{% block body %} 
+<style>
+    fieldset { border:solid 1px black; padding:15px; width:100%; }
+    legend {width:auto;padding:0 10px;border-bottom:none;margin-bottom: 0px;}
+    span#websiteName { color: darkseagreen; font-weight: bold; font-size: larger; }
+</style>
+<div class="body-content">
+  {% include "MagiseoSiteBundle:Commons:header.html.twig" %}
+    <div class="left-side">
+        <div class="logo"></div>
+        <div class="intro">
+            <div class="intro-left">
+                <h1 class="niceh">Rapport <span id="websiteName">{{ websiteName|lower }}</span></h1>
+                <div style="width: 55%;float: left;">
+                    <p>
+                        Vous trouverez sur cette page toutes les informations sur les
+                        améliorations apportées par MagiSEO à votre site web.
+                    </p>
+                </div>
+                <div style="
+                        background-color: antiquewhite;
+                        border-radius: 10px;
+                        padding: 10px;
+                        text-align: center;
+                        width: 40%;
+                        float: right;
+                ">
+                    <p>
+                        Cliquez sur le lien ci-dessous pour visionner ou télécharger le PDF
+                        de résultat :
+                    </p>
+                    <a href="/{{ pdfName }}">
+                        <img src="{{ asset('bundles/magiseosite/images/icons/LogoPDF.jpg') }}"
+                             alt="logo PDF" />
+                        <button class="btn btn-primary">
+                            Télécharger le PDF de résultat.
+                        </button>
+                    </a>
+                </div>
+                <!--
+                <div class="alertes">Pendant le développement de MagiSEO, les alertes ne concerneront que les progrès liés à celui-ci.</div>
+                -->
+                <hr style="clear:both;"/>
+
+{#                {{ pageURLParsedDUMP }}#}
+
+                {{ rapportContent|raw }}
+
+            </div>
+        </div>
+    </div>
+  {% include "MagiseoSiteBundle:Commons:menuRight.html.twig" %}
+  {% include "MagiseoSiteBundle:Commons:footer.html.twig" %}
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "::base.html.twig" %} 
+
+{% block body %} 
+{{parent () }}
+<div class="body-content">
+  {% include "MagiseoSiteBundle:Commons:header.html.twig" %}
+  <div class="left-side">
+    <div class="logo"></div>
+    <div class="intro">
+      <div class="intro-left">
+        <h1 class="niceh">Nous contacter</h1>
+        {% if formSent == false %}
+        <form id="sendMail" action="{{ 
+                             path('magiseo_site_contact') }}" method="post">
+            {{ form_widget(form) }}
+            <input type="submit" value="Envoyer un mail" class="btn btn-primary margin-top" />
+        </form>
+        {% else %}
+          Votre demande de contact a bien été envoyée, notre équipe traitera votre message dans les plus brefs délais.
+        {% endif %}
+      </div>
+        <div class="marginbot">
+        	<h2 class="niceh">MagiSEO sur les r&eacute;seaux sociaux</h2>
+        	<a href="https://www.facebook.com/magiseo">MagiSEO sur Facebook</a> et 
+          <a href="https://twitter.com/magiseoFR">MagiSEO sur Twitter @magiseoFR</a>
+        </div>
+    </div>
+  </div>
+  {% include "MagiseoSiteBundle:Commons:menuRight.html.twig" %}
+  {% include "MagiseoSiteBundle:Commons:footer.html.twig" %}
+</div>
+{% endblock %}

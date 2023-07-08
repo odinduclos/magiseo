@@ -1,0 +1,17 @@
+parameters:
+#    magiseo_user.example.class: Magiseo\UserBundle\Example
+
+services:
+    authentification_handler:
+        class:     Magiseo\UserBundle\Handler\Authentification
+        arguments: [@router, @security.context, @fos_user.user_manager, @service_container]
+
+    magiseo_user.registration.form.type:
+        class: Magiseo\UserBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: magiseo_user_registration }
+            
+#    magiseo_user.example:
+#        class: %magiseo_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

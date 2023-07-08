@@ -1,0 +1,7 @@
+div {
+	background-image: url("start.jpg");
+	border: none;
+	background-image: url("continue.jpg");
+	background-image: url("final.jpg");
+	border: 1px solid black;
+}

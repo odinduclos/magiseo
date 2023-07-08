@@ -1,0 +1,21 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+<style>
+    label { display: block; }
+</style>
+<div class="body-content">
+  {% include "MagiseoSiteBundle:Commons:header.html.twig" %}
+  <div class="left-side">
+    <div class="logo"></div>
+    <div class="intro" style="text-align: center;">
+      <div class="intro-left">
+        <legend>Créer un compte</legend>
+        {% include "FOSUserBundle:Registration:register_content.html.twig" %}
+      </div>
+    </div>
+  </div>
+  {% include "MagiseoSiteBundle:Commons:menuRight.html.twig" %}
+  {% include "MagiseoSiteBundle:Commons:footer.html.twig" %}
+</div>
+{% endblock %}

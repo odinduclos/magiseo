@@ -1,0 +1,5 @@
+div {border: 1px solid black;}
+div#id1 {border: 1px solid black;}
+#id1, #id2 {border: 1px solid black;}
+#id1 {border: 1px solid black;}
+.class2 {border: 1px solid black;}

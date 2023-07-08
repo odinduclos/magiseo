@@ -1,0 +1,182 @@
+{% extends "::base.html.twig" %}
+
+{% block javascript %}
+    {{ parent() }}
+    {% javascripts
+    "@MagiseoSiteBundle/Resources/public/js/diagnostic.js" 
+    "@MagiseoSiteBundle/Resources/public/js/jquery.form.min.js" 
+    "@MagiseoSiteBundle/Resources/public/js/upload.js" 
+    %}
+<script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+
+{# body #}
+{% block body %}
+<div class="body-content">
+  {% include "MagiseoSiteBundle:Commons:header.html.twig" %}
+    <div class="left-side">
+        <div class="logo"></div>
+        <div class="intro">
+            
+            <!-- Intro -->
+            <div class="intro-left">
+                <h1 class="niceh">Etape 1: Le diagnostic</h1>
+                L'outil de diagnostic vous permettra de faire analyser votre code 
+                source par le service MagiSEO, afin d'identifier le nombre d'erreur 
+                qu'il serait capable de corriger.<br/>
+                L'utilisation de cet outil est enti&egrave;rement libre et gratuite.
+{#                <div class="alertes">L'outil de diagnostic est encore en d&eacute;veloppement 
+                    et donc actuellement indisponible.<br/>
+                    Pour plus d'informations, suivez nous sur Twitter ou Facebook !</div>
+#}            </div>
+
+            <!-- Diagnostic : barre de progression  -->
+            <div id="progress" style="display: none;">
+                <p>R&eacute;cup&eacute;ration de votre site web en cours : <span class="progressDiagnos">0</span>&nbsp;%
+                    <span id="doneIcon" class="glyphicon glyphicon-ok hide" style="color: green" aria-hidden="true"></span>
+                </p>
+                <p>
+                    <strong>Etat :</strong>
+                    <span id="state"></span>
+                </p>
+                <progress id="progressBarDiagnos" value="0" min="0" max="100">
+                <span class="progressDiagnos">0</span>&nbsp;%</progress>
+                <!-- Msg Erreur -->
+                <div id="diagnosticErrorMsg" class="alert alert-danger">
+                    <h4>Erreur:</h4>
+                    <p>
+                        Cette archive ne possède aucune donnée exploitable.
+                        <br/>
+                        Veuillez réessayer.
+                    </p>
+                </div>
+                <div id="urlParsed" style="overflow: auto; height: 400px;"></div>
+            </div>
+
+            <!-- Bloc Etape suivante -->
+            <div id="nextStep" style="text-align: center; ">
+                <!-- Message Succès ! -->
+                <div class="alert alert-info">
+                    <h4>R&eacute;cup&eacute;ration du site web termin&eacute;e !</h4>
+                    Cliquez sur le bouton ci-dessous pour passer &agrave; l'&eacute;tape
+                    suivante : le rapport.
+                </div>
+                <!-- Bouton Etape Suivante-->
+                <a id="nextStepBtn" 
+                   href="{{ path('magiseo_site_rapport') }}">
+                    <button disabled class="btn btn-success btn-lg ">
+                        Etape suivante : rapport
+                    </button>
+                </a>
+            </div>
+            
+            <!-- Bloc déjà un rapport fini -->
+            <div class="hide alert alert-info alert-dismissible" id="alreadyFinishedReport" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <p>
+                    <strong>Votre dernier diagnostic est terminé !</strong>
+                    Vous pouvez voir le résultat ici :
+                    <a class="btn btn-info" href="#">
+                        Rapport
+                    </a>
+                    <br>
+                    La liste complète de vos rapports personnalisés se trouve dans votre espace
+                    <a href="{{ path('magiseo_user_profil') }}" class="alert-link">
+                        Mon compte
+                    </a>
+                </p>
+            </div>
+            
+            <!-- Accordéon -->
+            <div class="panel-group margin-top" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" 
+                               href="#collapseOne">
+                                Diagnostic par URL
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="form-diagnostic">
+                                <form id="diagnosticForm">
+                                    <fieldset>
+                                        <div class="controls">
+                                            <input id="url" type="text" 
+                                                   placeholder="URL de votre site">
+                                        </div>
+                                        <div class="control-group">
+                                            <button id="analyze" type="submit" 
+                                                    class="btn">Analyser</button>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="urlStatus" class="alert alert-danger">
+                            <h4>Erreur</h4>
+                            <p id="urlStatusMsg"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" 
+                               href="#collapseTwo">
+                                Diagnostic par upload de dossier
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="alertes">
+                                Fichiers accept&eacute;s: .tar, .rar, .zip.
+                            </div>
+                            <div class="notes marginbot">
+                                Un seul fichier &agrave; l'int&eacute;rieur de l'archive pour 
+                                les comptes d&eacute;couvertes.
+                            </div>
+                            <form id="archiveForm" action="{{ 
+                             path('magiseo_site_diagnostic') }}" method="post" 
+                             {{ form_enctype(form) }} class="marginbot">
+                                {{ form_widget(form) }}
+                                <input id="submit_archive" type="submit" value="Upload Archive" 
+                                       class="btn btn-primary margin-top" />
+                            </form>
+                            <!-- <input id="file" type="file" class="marginbot" /> -->
+
+                            <p>Progression de l'upload :</p>
+                            <div class="progressUpload">
+                                <div class="bar"></div>
+                                <div class="percent">0%</div>
+                            </div>
+                            <div id="uploadStatus" class="alert alert-danger">
+                                <h4>Erreur</h4>
+                                <p id="uploadStatusMsg"></p>
+                            </div>
+
+{#            <div id="progress-upload">
+              <p>Progression de l'upload: 0%</p>
+              <progress id="progress-upload-bar" value="0" min="0" max="100">0%</progress>
+            </div>
+#}          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+  {% include "MagiseoSiteBundle:Commons:menuRight.html.twig" %}
+  {% include "MagiseoSiteBundle:Commons:footer.html.twig" %}
+</div>
+{#<script src="{{ asset('bundles/magiseosite/js/upload.js') }}"></script>#}
+{% endblock %}

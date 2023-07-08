@@ -1,0 +1,27 @@
+magiseo_user_profil:
+    pattern: /profil
+    defaults: { _controller: MagiseoUserBundle:User:profil }
+
+magiseo_user_change_company:
+    pattern: /user_change_company
+    defaults: { _controller: MagiseoUserBundle:User:changeCompany }
+    requirements:
+        _methods: POST
+#    options:
+#        expose: true
+        
+magiseo_user_change_email:
+    pattern: /user_change_email
+    defaults: { _controller: MagiseoUserBundle:User:changeEmail }
+    requirements:
+        _methods: POST
+#    options:
+#        expose: true
+
+magiseo_user_change_password:
+    pattern: /user_change_password
+    defaults: { _controller: MagiseoUserBundle:User:changePassword }
+    requirements:
+        _methods: POST
+#    options:
+#        expose: true

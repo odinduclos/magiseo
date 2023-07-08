@@ -1,0 +1,7 @@
+parameters:
+#    magiseo_site.example.class: Magiseo\SiteBundle\Example
+
+services:
+#    magiseo_site.example:
+#        class: %magiseo_site.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

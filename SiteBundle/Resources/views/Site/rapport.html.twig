@@ -1,0 +1,73 @@
+{% extends "::base.html.twig" %} 
+
+{% block javascript %}
+    {{ parent() }}
+    {% javascripts
+        "@MagiseoSiteBundle/Resources/public/js/rapport.js" 
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{# body #}
+{% block body %} 
+    <style>
+        fieldset { min-height: 400px; border:solid 1px black; padding:15px; width:100%; }
+        legend {width:auto;padding:0 10px;border-bottom:none;margin-bottom: 0px;}
+        span#websiteName { color: darkseagreen; font-weight: bold; font-size: larger; }
+    </style>
+    <div class="body-content">
+        {% include "MagiseoSiteBundle:Commons:header.html.twig" %}
+        <div class="left-side">
+            <div class="logo"></div>
+            <div class="intro">
+                <div class="intro-left">
+                    <h1 class="niceh">Rapport <span id="websiteName">{{ websiteName|lower }}</span></h1>
+                    <div style="width: 55%;float: left;">
+                        <p>
+                            Vous trouverez sur cette page toutes les informations sur les 
+                            améliorations apportées par MagiSEO à votre site web.
+                        </p>
+                    </div>
+                    <div class="{% if errorMsg is not empty %}hide{% endif %}" 
+                        style="
+                         background-color: antiquewhite;
+                         border-radius: 10px;
+                         padding: 10px;
+                         text-align: center;
+                         width: 40%;
+                         float: right;
+                         ">
+                        <a id="logoPDF" href="#" data-id="{{ rapportId }}">
+                            <img src="{{ asset('bundles/magiseosite/images/icons/logoPdf.png') }}"
+                                 alt="logo PDF" />
+                            <span class="glyphicon glyphicon-time hide" style="font-size: 40px;vertical-align: bottom;" aria-hidden="true"></span>
+                            <button class="btn btn-primary">
+                                Télécharger le PDF de résultat.
+                            </button>
+                        </a>
+                    </div>
+                    <!--
+                    <div class="alertes">Pendant le développement de MagiSEO, les alertes ne concerneront que les progrès liés à celui-ci.</div>
+                    -->
+                    <div style="clear:both;"/></div>
+                <div class="row {% if errorMsg is empty %}hide{% endif %}">
+                    <div class="col-sm-offset-3 col-xs-6">
+                        <div class="alert alert-danger">
+                            <strong>Erreur :</strong> {{ errorMsg|raw }}
+                        </div>
+                    </div>
+                </div>                    
+
+
+                {#                {{ pageURLParsedDUMP }}#}
+
+                {{ rapportContent|raw }}
+
+            </div>
+        </div>
+    </div>
+    {% include "MagiseoSiteBundle:Commons:menuRight.html.twig" %}
+    {% include "MagiseoSiteBundle:Commons:footer.html.twig" %}
+</div>
+{% endblock %}

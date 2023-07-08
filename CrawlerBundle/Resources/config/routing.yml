@@ -1,0 +1,15 @@
+magiseo_crawler_start:
+    pattern:  /crawler/start/{id}
+    defaults: { _controller: MagiseoCrawlerBundle:Crawler:startCrawler, id: -1 }
+    options:
+        expose: true
+
+magiseo_crawler_launch:
+    pattern:  /crawler/launch/{id}
+    defaults: { _controller: MagiseoCrawlerBundle:Crawler:launchCrawler }
+
+magiseo_crawler_state:
+    pattern:  /crawler/state/{id}
+    defaults: { _controller: MagiseoCrawlerBundle:Crawler:state, id: null }
+    options:
+        expose: true

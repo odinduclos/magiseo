@@ -1,0 +1,181 @@
+<!-- Qqes infos -->
+    <div>
+    {% if results['total_time'] is defined %}
+        <h4>Pages trop longues à charger : </h4>
+        <ul>
+            {% for siteName, totalTime in results['total_time'] %}
+            <li><strong>{{ siteName }}</strong> : {{ totalTime }}s.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+
+    {% if oneTabActivated is not empty %}
+    
+{% set errorNb = 1 %}
+<ul class="nav nav-tabs" role="tablist">
+        <li class="{% if oneTabActivated == "links" %} active {% endif %} {% if results['status_code'] is not defined %} disabled {% endif %}">
+            <a href="#links" role="tab" data-toggle="tab">Liens en Erreur</a>
+        </li>
+
+        <li class="{% if oneTabActivated == "html" %} active {% endif %} {% if results['linksOut']['html'] is not defined %} disabled {% endif %}">
+            <a href="#html" role="tab" data-toggle="tab">HTML</a>
+        </li>
+
+        <li class="{% if oneTabActivated == "css" %} active {% endif %} {% if results['linksOut']['css'] is not defined %} disabled {% endif %}">
+            <a href="#css" role="tab" data-toggle="tab">CSS</a>
+        </li>
+
+{#    {% if results['keywords'] is defined %}#}
+        <li class="{% if oneTabActivated == "keywords" %} active {% endif %} {% if results['keywords'] is not defined %} disabled {% endif %}">
+            <a href="#keywords" role="tab" data-toggle="tab">Mots-cl&eacute;s</a>
+        </li>
+{#    {% endif %}#}
+
+        <li class="{% if oneTabActivated == "depth" %} active {% endif %} {% if results['depth'] is not defined %} disabled {% endif %}">
+            <a href="#depth" role="tab" data-target="depth" data-toggle="tab">Profondeur</a>
+        </li>
+</ul>
+
+
+<!-- All Tab panes -->
+<div class="tab-content">
+    <!-- Liens -->
+    {% if results['status_code'] is defined %}
+        <div class="tab-pane {% if oneTabActivated == 'links' %} active {% endif %}" id="links">
+            <fieldset>
+                <legend> Liens </legend>
+                <div class="tab_content">
+                    <div class="alert alert-info">
+                        Cliquez sur le nom d'un code d'erreur HTTP pour voir les pages web de votre site concernées.
+                    </div>
+                    <h4>Pages non joignables :</h4>
+                    <ul>
+                        {% for code, sitesArray in results['status_code'] %}
+                        <li>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ code }}">
+                                Erreur <strong>{{ code }}</strong>
+                            </a><br/>
+                            <div class="collapse" id="collapse_{{ code }}">
+                                {% for siteName in sitesArray %}
+                                <span class="likeList">{{ siteName|raw }}</span>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </fieldset>
+        </div>
+    {% endif %}
+    <!-- FIN de "Liens" ->
+
+    <!-- HTML -->
+    {% if results['linksOut'] is defined %}
+        {% if results['linksOut']['html'] is defined %}
+            <div class="tab-pane {% if oneTabActivated == 'html' %} active {% endif %}" id="html">
+                <fieldset>
+                    <legend> HTML </legend>
+                    <div class="tab_content" id="accordion">
+                        <div class="alert alert-info">
+                            Cliquez sur un type d'erreur HTML/CSS pour voir les pages web de votre site concernées.
+                        </div>
+                        <ul>
+                            {% for errorStr, sitesArray in results['linksOut']['html'] %}
+                                <li>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ errorNb }}">
+                                        <strong>{{ errorStr|capitalize }}</strong>
+                                    </a><br/>
+                                    <div class="collapse" id="collapse_{{ errorNb }}">
+                                        {% for siteName in sitesArray %}
+                                            <span class="likeList">{{ siteName }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </li>
+                                {% set errorNb = errorNb + 1 %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </fieldset>
+            </div>
+        {% endif %}
+    {% endif %}
+    <!-- FIN de "HTML" -->
+
+    <!-- CSS -->
+    {% if results['linksOut'] is defined %}
+        {% if results['linksOut']['css'] is defined %}
+            <div class="tab-pane {% if oneTabActivated == 'css' %} active {% endif %}" id="css">
+                <fieldset>
+                    <legend> CSS </legend>
+                    <div class="tab_content">
+                        <div class="alert alert-info">
+                            Cliquez sur le nom d'un fichier CSS pour voir les erreurs relevées par MagiSEO.
+                        </div>
+                        <ul>
+                            {% for siteName, errorStr in results['linksOut']['css'] %}
+                                <li>
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse_{{ errorNb }}">
+                                        <strong>{{ siteName }}</strong>
+                                    </a><br/>
+                                    <div class="collapse" id="collapse_{{ errorNb }}">
+				      {% for key, value in errorStr %}
+                                          <span class="likeList"> {{ value|raw }} </span>
+				      {% endfor %}
+                                    </div>
+                                </li>
+                                {% set errorNb = errorNb + 1 %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </fieldset>
+            </div>
+        {% endif %}
+    {% endif %}
+     <!-- FIN de "CSS" ->
+
+    <!-- Mots-clés -->
+    {% if results['keywords'] is defined %}
+        <div class="tab-pane {% if oneTabActivated == 'keywords' %} active {% endif %}" id="keywords">
+            <fieldset>
+                <legend> Mots-clés </legend>
+                <div class="tab_content"></div>
+            </fieldset>
+        </div>
+    {% endif %}
+    <!-- FIN de "Mots-clés" -->
+    
+    <!-- Profondeur -->
+    {% if results['depth'] is defined %}
+        <div class="tab-pane {% if oneTabActivated == 'depth' %} active {% endif %}" id="depth">
+            <fieldset>
+                <legend>Pages inatteignables</legend>
+                <div class="tab_content">
+		  <ul>
+		    {% for siteName, depth in results['depth'] %}
+                      <li><strong>{{ siteName }}</strong> : {{ depth }} clics.</li>
+		      {% endfor %}
+		  </ul>
+		</div>
+            </fieldset>
+        </div>
+    {% endif %}
+    <!-- FIN de "Profondeur" -->
+</div>
+
+    {% else%}
+    
+        <div class="alert alert-success">
+            <strong>Bravo !</strong>
+            Aucune erreur n'a été trouvée sur votre site web !
+        </div>
+        
+    {% endif %}    
+    
+<script>
+$( document ).ready(function() {
+    $(".nav.nav-tabs").find("li.disabled a").removeAttr("data-toggle").click(function(e) {
+        e.preventDefault();
+    });
+});
+</script>

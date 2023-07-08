@@ -1,0 +1,26 @@
+{% extends "::base.html.twig" %}
+
+{# body #}
+{% block body %}
+<div class="body-content">
+  {% include "MagiseoSiteBundle:Commons:header.html.twig" %}
+  <div class="left-side">
+    <div class="logo"></div>
+    <div class="intro">
+      <div class="intro-left">
+	<h1 class="niceh">Notifications MagiSEO</h1>
+	Les notifications vous tiennent informé des progrès effectués dans le dévelopement de MagiSEO, mais aussi de ceux effectués sur votre site si vous êtes déjà un client MagiSEO. Dans ce cas, félicitations!
+	<div class="alertes">Pendant le développement de MagiSEO, les notifications ne concerneront que les progrès liés à celui-ci.</div>
+        <hr/>
+        <h2>Vos notifications</h2>
+        {% for alerte in alertes %}
+          <h3>{{ alerte.name }}</h3>
+          <p>{{ alerte.value }}</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% include "MagiseoSiteBundle:Commons:menuRight.html.twig" %}
+  {% include "MagiseoSiteBundle:Commons:footer.html.twig" %}
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{#{% block footer %}
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+  <a class="navbar-brand" href="{{ path('magiseo_site_homepage') }}"><img src="{{ asset('bundles/magiseosite/images/icons/home.png') }}" alt="Accueil"></a>
+  <div class="center">
+    <a class="navbar-brand" href="{{ path('magiseo_site_profil') }}">Mon compte</a>
+    <a class="navbar-brand" href="{{ path('magiseo_site_alertes') }}">Alertes</a>
+<!--     <a class="navbar-brand" href=formules>Offres</a> -->
+<!--     <a class="navbar-brand" href="#">Nous connaître</a> -->
+    <a class="navbar-brand" href="{{ path('magiseo_site_contact') }}">Nous contacter</a>
+    <a class="navbar-brand" href="{{ path('magiseo_site_diagnostic') }}">Outil de diagnostic</a>
+  </div>
+  <!-- <a class="navbar-brand float-right" href="#"><img src="{{ asset('bundles/magiseosite/images/icons/key.png') }}" alt="enter"></a> -->
+</nav>
+{% endblock %}
+#}
+
+<footer>
+    © Copyright 2014  - MagiSEO
+</footer>

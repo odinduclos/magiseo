@@ -1,0 +1,39 @@
+{% extends "::base.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+<div class="body-content">
+      {% include "MagiseoSiteBundle:Commons:header.html.twig" %}
+    <div class="left-side">
+        <div class="logo"></div>
+        <div class="intro" style="text-align: center;">
+            <div class="intro-left">
+                <legend>Confirmation</legend>
+
+                {% for type, messages in app.session.flashbag.all() %}
+                    {% for message in messages %}
+                                <div class="flash-{{ type }}">
+                            {{ message }}
+                                </div>
+                    {% endfor %}
+                {% endfor %}
+                <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+                {% if app.session is not empty %}
+                    {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+                    {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>{% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+      {% include "MagiseoSiteBundle:Commons:menuRight.html.twig" %}
+      {% include "MagiseoSiteBundle:Commons:footer.html.twig" %}
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        setTimeout("location.href = '{{ path('magiseo_site_homepage') }}'"
+            ,5000);
+    });
+
+</script>
+{% endblock %}
